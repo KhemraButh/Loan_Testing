@@ -8,7 +8,7 @@ from sqlalchemy.exc import SQLAlchemyError
 # Database connection (using secrets.toml if available)
 # -------------------------------
 db_url = st.secrets.get("database", {}).get(
-    "url", "postgresql://postgres:TheK@localhost:5433/postgres"
+    "url", "postgresql://postgres:TheK@host:5433/postgres"
 )
 engine = create_engine(db_url)
 
