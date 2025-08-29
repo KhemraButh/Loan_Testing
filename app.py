@@ -1,15 +1,14 @@
 # app.py
 import streamlit as st
 import pandas as pd
+import sqlite3
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 
 # -------------------------------
-# Database connection (using secrets.toml if available)
+# Database connection (SQLite file)
 # -------------------------------
-db_url = st.secrets.get("database", {}).get(
-    "url", "postgresql://postgres:TheK@host:5433/postgres"
-)
+db_url = "sqlite:///loancam.db"  # SQLite DB file in the same folder
 engine = create_engine(db_url)
 
 # -------------------------------
@@ -29,14 +28,14 @@ def test_connection():
 # -------------------------------
 # Streamlit Interface
 # -------------------------------
-st.title("🔗 Database Connectivity Test")
+st.title("🔗 SQLite Database Connectivity Test")
 
-st.write("This small app tests if the database connection works correctly.")
+st.write("This small app tests if the SQLite database connection works correctly.")
 
 if st.button("Test DB Connection"):
     df = test_connection()
     if not df.empty:
-        st.success("✅ Successfully connected to database!")
+        st.success("✅ Successfully connected to SQLite database!")
         st.dataframe(df)
     else:
-        st.error("❌ Could not retrieve data from the database.")
+        st.error("❌ Could not retrieve data from the SQLite database.")
